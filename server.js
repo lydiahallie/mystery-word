@@ -4,7 +4,10 @@ const mustacheExpress = require('mustache-express')
 const app = express()
 const fs = require('fs')
 const words = fs.readFileSync("/usr/share/dict/words", "utf-8").toLowerCase().split("\n");
-// Use Mustache as our templating engine.
+
+let underscores = [];
+let count = 8;
+
 app.engine('mustache', mustacheExpress())
 app.set('views', './views')
 app.set('view engine', 'mustache')
