@@ -15,17 +15,28 @@ app.use(express.static('./public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+//To show how many attempts they have left, the counter of that,
+// and the underscores that will appear
 let attempts;
 let counter;
-let guessWord = words[Math.floor(Math.random()*words.length)];
-let underscores = guessWord.replace(/[a-z]/gi, '_');
+let underscores = [];
 
+//it has to pick a random word from the file
+const guessWord = words[Math.floor(Math.random()*words.length)];
+
+//get the underscores instead of the actual letters for now
+const wordToGuess = guessWord.replace(/[a-z]/gi, '_');
+
+//whenever you load the page, it'll set the counter to 0 and pushes
+//the word that it found to the underscores empty array
 app.get('/', (req,res) => {
-  attempts = [];
   counter = 0;
-  res.render('home')
+  underscores.push(wordToGuess);
+  res.render('home');
 })
 
+// this isn't working yet, but when you click on the button it should
+// check whether the input is valid
 app.post('/attempt', (req, res) => {
   req
   .checkBody("attemptedLetter", "It has to be a valid letter")
@@ -33,11 +44,6 @@ app.post('/attempt', (req, res) => {
   .notEmpty()
 })
 
-
 app.listen(3000, () => {
   console.log('Listening on port 3000')
 })
-
-// Create an input field
-// Create an array, push the req.body of the input field to that array (attempts)
-// Give the Guess button a function
