@@ -41,10 +41,9 @@ app.get('/', (req,res) => {
 // this isn't working yet, but when you click on the button it should
 // check whether the input is valid
 app.post('/attempt', (req, res) => {
-  req
-  .checkBody("attemptedLetter", "It has to be a valid letter")
-  .isAlpha()
-  .notEmpty()
+  let guessedLetter = req.body.attempt.toLowerCase();
+  if hiddenWord.includes(guessedLetter){
+    hiddenWord.replace(/_/g,'a')
 })
 
 app.listen(3000, () => {
