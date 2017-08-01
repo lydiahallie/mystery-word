@@ -22,19 +22,20 @@ let counter;
 
 //it has to pick a random word from the file, then replace the
 //letters with underscores, then return that
-let word = words[Math.floor(Math.random()*words.length)];
-let hiddenWord = word.replace(/[a-z]/gi, '_');
-hiddenWord = hiddenWord.split(' ');
 
+const getWord = () => {
+   const word = words[Math.floor(Math.random()*words.length)];
+   let hiddenWord = word.replace(/[a-z]/gi, '_').split('').join(' ');
+   return hiddenWord
+}
 
 //whenever you load the page, it'll set the counter to 0 and pushes
 //the word that it found to the underscores empty array
 app.get('/', (req,res) => {
   counter = 0;
-  return hiddenWord
+  let guessWord = getWord()
   res.render('home', {guessWord});
 })
-
 // this isn't working yet, but when you click on the button it should
 // check whether the input is valid
 app.post('/', (req, res) => {
@@ -47,7 +48,6 @@ app.post('/', (req, res) => {
     }
   }
 })
-
 
 app.listen(3000, () => {
   console.log('Listening on port 3000')
