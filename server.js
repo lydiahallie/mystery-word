@@ -34,17 +34,22 @@ const getWord = () => {
 app.get('/', (req,res) => {
   counter = 0;
   let guessWord = getWord()
-  fullWord = guessWord
-  res.render('home', {guessWord, fullWord});
+  res.render('home', {guessWord, word});
 })
 
 // this isn't working yet, but when you click on the button it should
-// check whether the input is valid
+// check whether the input is valid 
 app.post('/', (req, res) => {
   let guessedLetter = req.body.attempt.toLowerCase();
-  if hiddenWord.includes(guessedLetter){
-    hiddenWord.replace(/_/g, guessedLetter)
+  for (let i = 0; i < word.length; i++) {
+    if (word[i] === guessedLetter){
+      hiddenWord[i] = guessedLetter
+    }else{
+    counter++
+    }
+  }
 })
+
 
 app.listen(3000, () => {
   console.log('Listening on port 3000')
