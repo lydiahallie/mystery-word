@@ -19,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // and the underscores that will appear
 let attempts;
 let counter;
+let attemptsArray = [];
 const word = words[Math.floor(Math.random()*words.length)];
 
 //Underscores
@@ -44,7 +45,6 @@ app.post('/attempt', (req, res) => {
       displayedWord[i] = displayedLetter;
     }
   }
-
   res.render('home', { displayedWord: displayedWord.join('') });
 })
 
