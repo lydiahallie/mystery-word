@@ -19,26 +19,24 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // and the underscores that will appear
 let attempts;
 let counter;
-let underscores = [];
 
 //it has to pick a random word from the file, then replace the
 //letters with underscores, then return that
-const getWord = () => {
-  const word = words[Math.floor(Math.random()*words.length)];
-  const hiddenWord = word.replace(/[a-z]/gi, '_');
-  return hiddenWord
-}
+let word = words[Math.floor(Math.random()*words.length)];
+let hiddenWord = word.replace(/[a-z]/gi, '_');
+hiddenWord = hiddenWord.split(' ');
+
 
 //whenever you load the page, it'll set the counter to 0 and pushes
 //the word that it found to the underscores empty array
 app.get('/', (req,res) => {
   counter = 0;
-  let guessWord = getWord()
-  res.render('home', {guessWord, word});
+  return hiddenWord
+  res.render('home', {guessWord});
 })
 
 // this isn't working yet, but when you click on the button it should
-// check whether the input is valid 
+// check whether the input is valid
 app.post('/', (req, res) => {
   let guessedLetter = req.body.attempt.toLowerCase();
   for (let i = 0; i < word.length; i++) {
