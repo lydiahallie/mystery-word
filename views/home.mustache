@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
   </head>
   <body>
-    <h1>Mystery Word</h1>
-    <h3>{{displayedWord}}</h3>
-    <p>{{counterAttempts}}</p>
-    <p>{{attemptedLetters}}</p>
-    <form class="" action="/attempt" method="post">
-      <input type="text" name="letter" placeholder="Guess a letter">
-      <button type="submit">Guess!</button>
-    </form>
+    <div class="wrapper">
+      <div id="title">
+        <h1>Mystery Word</h1>
+      </div>
+      <div id="middle">
+        <h3>{{displayedWord}}</h3>
+        <p>You have {{counterAttempts}} attempts left</p>
+      </div>
+      <p>{{attemptedLetters}}</p>
+      <p>{{message}}</p>
+      <form class="" action="/attempt" method="post">
+        <input type="text" name="letter" placeholder="Guess a letter">
+        <button type="submit">Guess!</button>
+      </form>
+    </div>
   </body>
 </html>

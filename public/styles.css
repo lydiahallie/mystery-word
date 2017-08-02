@@ -1,3 +1,14 @@
+body {
+  font-family: 'Quicksand', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  font-weight: 100;
+}
+
 h3 {
   font-size: 30px;
   letter-spacing: 5px
