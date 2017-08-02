@@ -50,6 +50,7 @@ app.post('/attempt', (req, res) => {
     message = "You have already guessed this letter!"
   }
 
+/// NOT WORKING!!! ARGH!! pretty sure the redirect is just wrong but idk
   if (!word.includes(guessedLetter) && (!attemptedLetters.includes(guessedLetter))) {
     if (counterAttempts === 1){
       loseMessage = "You lose!"
