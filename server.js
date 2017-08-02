@@ -15,22 +15,19 @@ app.use(express.static('./public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+let counterAttempts;
+let attemptedLetters = [];
 //To show how many attempts they have left, the counter of that,
 // and the underscores that will appear
-let attempts;
-let counter;
-let attemptsArray = [];
 const word = words[Math.floor(Math.random()*words.length)];
 
 //Underscores
 const hideWord = (word) => word.split('').map(character => '_').join('');
-
-
 //whenever you load the page, it'll set the counter to 0 and pushes
 //the word that it found to the underscores empty array
 app.get('/', (req,res) => {
   const displayedWord = hideWord(word);
-  counter = 0;
+  counterAttempts = 0;
   res.render('home', { word, displayedWord });
 })
 
@@ -38,15 +35,19 @@ app.get('/', (req,res) => {
 // check whether the input is valid
 app.post('/attempt', (req, res) => {
   const guessedLetter = req.body.letter.toLowerCase();
-  const displayedWord = hideWord(word).split('');
+  let displayedWord = hideWord(word).split('');
   for (let i = 0; i < word.length; i++) {
     const displayedLetter = word[i];
     if (displayedLetter === guessedLetter) {
       displayedWord[i] = displayedLetter;
     }
+    if (!word.includes(guessedLetter)) {
+      counterAttempts = (counterAttempts+1)
+    }
   }
-  res.render('home', { displayedWord: displayedWord.join('') });
-})
+  attemptedLetters.push(guessedLetter);
+  res.render('home', { displayedWord: displayedWord.join(''), counterAttempts, attemptedLetters});
+});
 
 
 app.listen(3000, () => {
