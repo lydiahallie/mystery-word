@@ -20,23 +20,18 @@ let attemptedLetters = [];
 let message;
 let result;
 let loseMessage;
-//To show how many attempts they have left, the counter of that,
-// and the underscores that will appear
-const word = words[Math.floor(Math.random()*words.length)];
 
-//Underscores
+let word = words[Math.floor(Math.random()*words.length)];
+
 const hideWord = (word) => word.split('').map(character => '_').join('');
 let displayedWord = hideWord(word).split('');
-//whenever you load the page, it'll set the counter to 0 and pushes
-//the word that it found to the underscores empty array
+
 app.get('/', (req,res) => {
-  const displayedWord = hideWord(word);
+  let displayedWord = hideWord(word);
   counterAttempts = 8;
   res.render('home', { word, displayedWord, counterAttempts});
 })
 
-// this isn't working yet, but when you click on the button it should
-// check whether the input is valid
 app.post('/attempt', (req, res) => {
   const guessedLetter = req.body.letter.toLowerCase();
   for (let i = 0; i < word.length; i++) {
@@ -50,26 +45,26 @@ app.post('/attempt', (req, res) => {
     message = "You have already guessed this letter!"
   }
 
-/// NOT WORKING!!! ARGH!! pretty sure the redirect is just wrong but idk
   if (!word.includes(guessedLetter) && (!attemptedLetters.includes(guessedLetter))) {
     if (counterAttempts === 1){
-      loseMessage = "You lose!"
-      res.redirect('lose', {loseMessage})
+      counterAttempts = 0;
+      displayedWord = word;
+      loseMessage = "You lost!"
     }else{
       counterAttempts--
     }
+  }
+
+  if ((displayedWord === word) && (counterAttempts >= 1)) {
+    loseMessage = "You won!"
   }
 
   if (!attemptedLetters.includes(guessedLetter)){
     attemptedLetters.push(guessedLetter);
   }
 
-  //It has to show the word when the player doesn't get it right
-
-  //If the player loses or wins, it has to show a "Play again?" button
-  res.render('home', { displayedWord: displayedWord.join(''), counterAttempts, attemptedLetters, message, loseMessage});
+  res.render('home', { displayedWord: displayedWord, counterAttempts, attemptedLetters, message, loseMessage, word});
 });
-
 
 app.listen(3000, () => {
   console.log('Listening on port 3000')
