@@ -17,7 +17,7 @@
       <p>Letters guessed: {{attemptedLetters}}</p>
       <p>{{message}}</p>
       <form class="" action="/attempt" method="post">
-        <input type="text" name="letter" placeholder="Guess a letter">
+        <input autocomplete="true" type="text" name="letter" placeholder="Guess a letter">
         <button type="submit">Guess!</button>
       </form>
     </div>

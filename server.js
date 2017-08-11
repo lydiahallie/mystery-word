@@ -48,11 +48,10 @@ app.post('/attempt', (req, res) => {
   if (!word.includes(guessedLetter) && (!attemptedLetters.includes(guessedLetter))) {
     if (counterAttempts === 1){
       counterAttempts = 0;
-      displayedWord = word;
+      displayedWord = word.split('');
       loseMessage = "You lost!"
-    }else{
-      counterAttempts--
     }
+    counterAttempts--
   }
 
   if ((displayedWord === word) && (counterAttempts >= 1)) {
@@ -62,8 +61,8 @@ app.post('/attempt', (req, res) => {
   if (!attemptedLetters.includes(guessedLetter)){
     attemptedLetters.push(guessedLetter);
   }
-
-  res.render('home', { displayedWord: displayedWord, counterAttempts, attemptedLetters, message, loseMessage, word});
+  console.log('displayedWord', displayedWord)
+  res.render('home', { displayedWord: displayedWord.join(''), counterAttempts, attemptedLetters, message, loseMessage, word});
 });
 
 app.listen(3000, () => {
