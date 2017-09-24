@@ -61,7 +61,6 @@ app.post('/attempt', (req, res) => {
   if (!attemptedLetters.includes(guessedLetter)){
     attemptedLetters.push(guessedLetter);
   }
-  console.log('displayedWord', displayedWord)
   res.render('home', { displayedWord: displayedWord.join(''), counterAttempts, attemptedLetters, message, loseMessage, word});
 });
 
